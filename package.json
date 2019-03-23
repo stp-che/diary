@@ -1,0 +1,15 @@
+{
+  "name": "diary",
+  "version": "0.0.1",
+  "description": "my diary",
+  "main": "main.js",
+  "scripts": {
+  	"start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "stp-che",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^4.1.0"
+  }
+}
