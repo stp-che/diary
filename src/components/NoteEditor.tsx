@@ -5,6 +5,15 @@ import NoteService from "../services/NoteService"
 import { withStyles } from '@material-ui/styles';
 import { TextField, Button, Grid } from "@material-ui/core"
 
+import * as MomentUtils from '@date-io/moment';
+
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
+
+
 type Props = {note: Note, classes: any};
 
 const styles = {
@@ -23,12 +32,12 @@ const styles = {
 };
 
 class NotesEditor extends React.Component<Props, {note: Note}> {
-  constructor(props){
+  constructor(props: Props){
     super(props);
     this.state = {note: this.props.note};
   }
 
-  onChange = (e) => {
+  onChange = (e: any) => {
     this.state.note.text = e.target.value;
     this.setState({note: this.state.note});
   };
@@ -40,12 +49,20 @@ class NotesEditor extends React.Component<Props, {note: Note}> {
     const {note} = this.state;
 
     return(
-      <Grid container direction="column" alignItems="stretch" alignContent="stretch" justify="flex-start" spacing={8} className={classes.container}>
-        <Grid item><Button variant="outlined" onClick={this.saveNote}>Save</Button></Grid>
-        <Grid item className={classes.textareaContainer}>
-          <textarea className={classes.textarea} value={note.text} onChange={this.onChange}/>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <Grid container direction="column" alignItems="stretch" alignContent="stretch" justify="flex-start" spacing={1} className={classes.container}>
+          <Grid item><Button variant="contained" onClick={this.saveNote}>Save</Button></Grid>
+          <Grid item>
+            <Grid container spacing={1}>
+              <Grid item xs={9}><TextField name="title" fullWidth/></Grid>
+              <Grid item xs={3}><KeyboardDatePicker name="date" fullWidth/></Grid>
+            </Grid>
+          </Grid>
+          <Grid item className={classes.textareaContainer}>
+            <textarea name="text" className={classes.textarea} value={note.text} onChange={this.onChange}/>
+          </Grid>
         </Grid>
-      </Grid>
+      </MuiPickersUtilsProvider>
     )
   }
 }
