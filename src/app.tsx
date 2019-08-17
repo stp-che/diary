@@ -14,8 +14,11 @@ const styles = {
 class AppX extends React.Component<{classes: any}, {note: Note}> {
   constructor(){
     super();
-    this.state = {note: new Note()};
-    // this.state.note
+    let note = new Note();
+    note.title = "";
+    note.date = new Date();
+    note.text = "";
+    this.state = {note};
   }
 
   render() {

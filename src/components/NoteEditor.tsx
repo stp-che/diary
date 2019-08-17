@@ -38,7 +38,7 @@ class NotesEditor extends React.Component<Props, {note: Note}> {
   }
 
   onChange = (e: any) => {
-    this.state.note.text = e.target.value;
+    this.state.note[e.target.name] = e.target.value;
     this.setState({note: this.state.note});
   };
 
@@ -54,8 +54,8 @@ class NotesEditor extends React.Component<Props, {note: Note}> {
           <Grid item><Button variant="contained" onClick={this.saveNote}>Save</Button></Grid>
           <Grid item>
             <Grid container spacing={1}>
-              <Grid item xs={9}><TextField name="title" fullWidth/></Grid>
-              <Grid item xs={3}><KeyboardDatePicker name="date" fullWidth/></Grid>
+              <Grid item xs={9}><TextField name="title" value={note.title} onChange={this.onChange} fullWidth/></Grid>
+              <Grid item xs={3}><KeyboardDatePicker name="date" value={note.date} onChange={this.onChange} fullWidth/></Grid>
             </Grid>
           </Grid>
           <Grid item className={classes.textareaContainer}>
