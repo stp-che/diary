@@ -15,7 +15,7 @@ export default {
   
     ipcMain.on('/notes/list', async (event: any) => {
       try {
-        event.returnValue = await Repo.Note.find();
+        event.returnValue = await Repo.Note.find({order: {date: "DESC"}});
       } catch (err) {
         throw err;
       }

@@ -31,10 +31,12 @@ const styles = {
   }
 };
 
-class NotesEditor extends React.Component<Props, {note: Note}> {
+class NoteEditor extends React.Component<Props, {note: Note}> {
   constructor(props: Props){
     super(props);
-    this.state = {note: this.props.note};
+    this.state = {
+      note: this.props.note
+    };
   }
 
   onChange = (e: any) => {
@@ -72,4 +74,4 @@ class NotesEditor extends React.Component<Props, {note: Note}> {
   }
 }
 
-export default withStyles(styles)(NotesEditor);
+export default withStyles(styles)(NoteEditor);

@@ -1,15 +1,17 @@
 import * as React from 'react';
 import {Note} from "../models/Note";
-import {List, ListItem, ListItemText, Divider} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import {List, ListItem, ListItemText} from '@material-ui/core';
 
-const NotesList = (props: {notes: Note[]}) => (
+type Props = {notes: Note[], selectedNote?: Note, selectNote: Function}
+
+const NotesList = ({notes, selectedNote, selectNote}: Props) => (
   <List>
-    {props.notes.map((note: Note) => (
+    {notes.map((note: Note) => (
       <React.Fragment key={note.id}>
-        <ListItem>
+        <ListItem divider onClick={() => selectNote(note)} selected={selectedNote && selectedNote.id == note.id}>
           <ListItemText primary={note.title} secondary={note.date.toLocaleDateString()}/>
         </ListItem>
-        <Divider variant="inset" component="li" />
       </React.Fragment>
     ))}
   </List>
