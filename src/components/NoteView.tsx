@@ -7,7 +7,7 @@ import { Typography, Button, Grid } from "@material-ui/core"
 
 import NoteEditor from "./NoteEditor"
 
-type Props = {note: Note};
+type Props = {note: Note, afterSave?: Function};
 
 class NoteView extends React.Component<Props, {edit: boolean}> {
   constructor(props: Props){
@@ -15,7 +15,7 @@ class NoteView extends React.Component<Props, {edit: boolean}> {
     this.state = {edit: this.props.note.id === undefined};
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (this.props.note.id !== prevProps.note.id) {
       this.setState({edit: this.props.note.id === undefined});
     }
@@ -23,17 +23,24 @@ class NoteView extends React.Component<Props, {edit: boolean}> {
 
   edit = () => this.setState({edit: true});
 
+  afterSave = (note: Note) => {
+    this.setState({edit: false});
+    this.props.afterSave(note);
+  }
+
   render() {
     const {note} = this.props;
     if (this.state.edit) {
-      return <NoteEditor note={note}/>
+      return <NoteEditor note={note} afterSave={this.afterSave} />
     } else {
       return (
         <div>
           <Button variant="contained" onClick={this.edit}>Edit</Button>
           <Typography variant="h5">{note.title}</Typography>
           <Typography variant="subtitle1">{note.date.toLocaleDateString()}</Typography>
-          <Typography variant="body1">{note.text}</Typography>
+          {
+            (note.text || "").split(/\n/).map((s, i) => <Typography variant="body1" key={i}>{s}</Typography>)
+          }
         </div>
       )
     }

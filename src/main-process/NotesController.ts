@@ -8,6 +8,7 @@ export default {
       try {
         const note = await Repo.Note.create(_note);
         await Repo.Note.save(note);
+        event.returnValue = note;
       } catch (err) {
         throw err;
       }

@@ -6,7 +6,7 @@ import {List, ListItem, ListItemText} from '@material-ui/core';
 type Props = {notes: Note[], selectedNote?: Note, selectNote: Function}
 
 const NotesList = ({notes, selectedNote, selectNote}: Props) => (
-  <List>
+  <List style={{maxHeight: '100%', overflow: 'auto'}}>
     {notes.map((note: Note) => (
       <React.Fragment key={note.id}>
         <ListItem divider onClick={() => selectNote(note)} selected={selectedNote && selectedNote.id == note.id}>

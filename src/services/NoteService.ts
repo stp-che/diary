@@ -2,9 +2,9 @@ import {ipcRenderer} from 'electron'
 import {Note} from "../models/Note"
 
 const NoteService = {
-  saveNote: (note: Note) => {
-    console.log('NoteService.saveNote', note);
-    ipcRenderer.send('/notes/save', note);
+  saveNote: (note: Note): Note => {
+    // console.log('NoteService.saveNote', note);
+    return new Note(ipcRenderer.sendSync('/notes/save', note));
   },
   getNotes: (): Note[] => {
     return ipcRenderer.sendSync('/notes/list').map(n => new Note(n));

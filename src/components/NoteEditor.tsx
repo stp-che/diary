@@ -14,7 +14,7 @@ import {
 
 
 
-type Props = {note: Note, classes: any};
+type Props = {note: Note, afterSave: Function, classes: any};
 
 const styles = {
   container: {
@@ -49,7 +49,9 @@ class NoteEditor extends React.Component<Props, {note: Note}> {
     this.setState({note: this.state.note});
   };
 
-  saveNote = () => NoteService.saveNote(this.state.note);
+  saveNote = () => {
+    this.props.afterSave(NoteService.saveNote(this.state.note));
+  }
 
   render() {
     const {classes} = this.props;
