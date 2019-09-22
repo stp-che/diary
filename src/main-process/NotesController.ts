@@ -8,9 +8,14 @@ export default {
       try {
         const note = await Repo.Note.create(_note);
         await Repo.Note.save(note);
-        // event.returnValue = await itemRepo.find();
-        // event.sender.send("note-saved", new Note({id: 1, text: _note.text}))
-        // console.log("/notes/save", _note);
+      } catch (err) {
+        throw err;
+      }
+    });
+  
+    ipcMain.on('/notes/list', async (event: any) => {
+      try {
+        event.returnValue = await Repo.Note.find();
       } catch (err) {
         throw err;
       }

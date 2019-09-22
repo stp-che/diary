@@ -6,7 +6,7 @@ export class Note
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("date", {nullable: false})
+  @Column("datetime", {nullable: false})
   date: Date;
 
   @Column("varchar")
@@ -15,4 +15,10 @@ export class Note
   @Column("text")
   text: string;
 
+  constructor(obj: any) {
+    if (obj) {
+      Object.assign(this, obj);
+      this.date = new Date(obj.date);
+    }
+  }
 }

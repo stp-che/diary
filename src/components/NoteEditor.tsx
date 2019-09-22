@@ -42,6 +42,11 @@ class NotesEditor extends React.Component<Props, {note: Note}> {
     this.setState({note: this.state.note});
   };
 
+  onDateChange = (moment: any) => {
+    this.state.note.date = moment.toDate();
+    this.setState({note: this.state.note});
+  };
+
   saveNote = () => NoteService.saveNote(this.state.note);
 
   render() {
@@ -55,7 +60,7 @@ class NotesEditor extends React.Component<Props, {note: Note}> {
           <Grid item>
             <Grid container spacing={1}>
               <Grid item xs={9}><TextField name="title" value={note.title} onChange={this.onChange} fullWidth/></Grid>
-              <Grid item xs={3}><KeyboardDatePicker name="date" value={note.date} onChange={this.onChange} fullWidth/></Grid>
+              <Grid item xs={3}><KeyboardDatePicker name="date" value={note.date} onChange={this.onDateChange} fullWidth/></Grid>
             </Grid>
           </Grid>
           <Grid item className={classes.textareaContainer}>
