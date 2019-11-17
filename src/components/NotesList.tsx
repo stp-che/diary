@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Note} from "../models/Note";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import {List, ListItem, ListItemText} from '@material-ui/core';
 
 type Props = {notes: Note[], selectedNote?: Note, selectNote: Function}

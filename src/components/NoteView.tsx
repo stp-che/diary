@@ -3,9 +3,20 @@ import {Note} from "../models/Note"
 import NoteService from "../services/NoteService"
 
 // import { withStyles } from '@material-ui/styles';
-import { Typography, Button, Grid } from "@material-ui/core"
+import { Typography, Button } from "@material-ui/core"
 
 import NoteEditor from "./NoteEditor"
+
+import * as MarkdownIt from "markdown-it";
+
+import {replace as replaceTags} from '../lib/Tags';
+
+
+function formatNoteText(text: string): string {
+  return (new MarkdownIt({html: true})).render(
+    replaceTags(text, tag => `<a href="#/tags/${tag}">#${tag}</a>`)
+  );
+};
 
 type Props = {note: Note, afterSave?: Function};
 
@@ -30,6 +41,7 @@ class NoteView extends React.Component<Props, {edit: boolean}> {
 
   render() {
     const {note} = this.props;
+    // console.log((new MarkdownIt({html: true})).parseInline(note.text || ""));
     if (this.state.edit) {
       return <NoteEditor note={note} afterSave={this.afterSave} />
     } else {
@@ -38,9 +50,7 @@ class NoteView extends React.Component<Props, {edit: boolean}> {
           <Button variant="contained" onClick={this.edit}>Edit</Button>
           <Typography variant="h5">{note.title}</Typography>
           <Typography variant="subtitle1">{note.date.toLocaleDateString()}</Typography>
-          {
-            (note.text || "").split(/\n/).map((s, i) => <Typography variant="body1" key={i}>{s}</Typography>)
-          }
+          <div dangerouslySetInnerHTML={ {__html: formatNoteText(note.text || "")} } />
         </div>
       )
     }

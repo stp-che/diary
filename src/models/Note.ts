@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {NoteTag} from './NoteTag';
 
 @Entity()
 export class Note
@@ -14,6 +15,9 @@ export class Note
 
   @Column("text")
   text: string;
+
+  @OneToMany(type => NoteTag, tag => tag.note)
+  tags: NoteTag[];
 
   constructor(obj: any) {
     if (obj) {
